@@ -1,6 +1,5 @@
 defmodule ParallelMatMul do
   def multiply(matrix1, matrix2) do
-    cols2 = length(hd(matrix2))
     transposed_matrix2 = transpose(matrix2)
 
     matrix1

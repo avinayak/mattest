@@ -17,9 +17,7 @@ defmodule SerialMatMul do
   end
 
   def multiply(matrix1, matrix2) do
-    with true <- is_list(matrix1) and is_list(matrix2),
-         true <- Enum.all?(matrix1, &is_list/1) and Enum.all?(matrix2, &is_list/1),
-         cols1 <- length(hd(matrix1)),
+    with cols1 <- length(hd(matrix1)),
          rows2 <- length(matrix2),
          true <- cols1 == rows2 do
       do_multiply(matrix1, transpose(matrix2))

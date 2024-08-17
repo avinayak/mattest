@@ -7,8 +7,8 @@ defmodule Bench do
     # medium_matrix_a = MatGenerator.generate_random_matrix(100, 100)
     # medium_matrix_b = MatGenerator.generate_random_matrix(100, 100)
 
-    large_matrix_a = MatGenerator.generate_random_matrix(100, 400)
-    large_matrix_b = MatGenerator.generate_random_matrix(400, 100)
+    large_matrix_a = MatGenerator.generate_random_matrix(40, 144)
+    large_matrix_b = MatGenerator.generate_random_matrix(144, 40)
 
     _ =
       Benchee.run(%{
