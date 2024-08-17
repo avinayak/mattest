@@ -10,6 +10,9 @@ CFLAGS = -fPIC -I$(ERTS_INCLUDE_DIR) -O3
 # C++ flags
 CXXFLAGS = $(CFLAGS) -std=c++11
 
+# Metal-specific flags
+METAL_FLAGS =  -std=c++17 -Imetal-cpp -framework Metal -framework Foundation -framework QuartzCore
+
 LDFLAGS = -shared -dynamiclib -undefined dynamic_lookup
 
 ifeq ($(shell uname -s), Darwin)
@@ -28,7 +31,7 @@ $(NIF_MAT_MUL_SO): native/nif_mat_mul.cpp
 
 $(NIF_MAT_MUL_METAL_SO): native/nif_mat_mul_metal.cpp
 	mkdir -p $(PRIV_DIR)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $<
+	$(CXX) $(CXXFLAGS) $(METAL_FLAGS) $(LDFLAGS) -o $@ $<
 
 clean:
 	rm -f $(NIF_DEMO_SO) $(NIF_MAT_MUL_SO) $(NIF_MAT_MUL_METAL_SO)
