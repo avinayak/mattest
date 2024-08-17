@@ -3,16 +3,6 @@ defmodule NifDemo do
   Documentation for `Mattest`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Mattest.hello()
-      :world
-
-  """
-
   @on_load :load_nifs
 
   def load_nifs do
