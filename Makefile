@@ -2,6 +2,7 @@ ERTS_INCLUDE_DIR := $(shell erl -eval 'io:format("~s", [lists:concat([code:root_
 PRIV_DIR = $(MIX_APP_PATH)/priv
 NIF_DEMO_SO = $(PRIV_DIR)/nif_demo.so
 NIF_MAT_MUL_SO = $(PRIV_DIR)/nif_mat_mul.so
+NIF_MAT_MUL_METAL_SO = $(PRIV_DIR)/nif_mat_mul_metal.so
 
 # C flags
 CFLAGS = -fPIC -I$(ERTS_INCLUDE_DIR) -O3
@@ -15,7 +16,7 @@ ifeq ($(shell uname -s), Darwin)
     LDFLAGS += -flat_namespace -undefined suppress
 endif
 
-all: $(NIF_DEMO_SO) $(NIF_MAT_MUL_SO)
+all: $(NIF_DEMO_SO) $(NIF_MAT_MUL_SO) $(NIF_MAT_MUL_METAL_SO)
 
 $(NIF_DEMO_SO): native/nif_demo.c
 	mkdir -p $(PRIV_DIR)
@@ -25,7 +26,11 @@ $(NIF_MAT_MUL_SO): native/nif_mat_mul.cpp
 	mkdir -p $(PRIV_DIR)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $<
 
+$(NIF_MAT_MUL_METAL_SO): native/nif_mat_mul_metal.cpp
+	mkdir -p $(PRIV_DIR)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ $<
+
 clean:
-	rm -f $(NIF_DEMO_SO) $(NIF_MAT_MUL_SO)
+	rm -f $(NIF_DEMO_SO) $(NIF_MAT_MUL_SO) $(NIF_MAT_MUL_METAL_SO)
 
 .PHONY: all clean

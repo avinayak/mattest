@@ -20,6 +20,9 @@ defmodule Bench do
         end,
         "nif serial / large matrices" => fn ->
           NifSerialMatMul.multiply(large_matrix_a, large_matrix_b)
+        end,
+        "nif metal / large matrices" => fn ->
+          NifMatMulMetal.multiply(large_matrix_a, large_matrix_b)
         end
       })
 
