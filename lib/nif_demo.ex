@@ -1,8 +1,4 @@
 defmodule NifDemo do
-  @moduledoc """
-  Documentation for `Mattest`.
-  """
-
   @on_load :load_nifs
 
   def load_nifs do

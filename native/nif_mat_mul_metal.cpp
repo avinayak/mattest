@@ -94,8 +94,20 @@ void multiplyMatricesGPU(const vector<int> &a, const vector<int> &b, vector<int>
 
     // Copy result from GPU to CPU
     memcpy(result.data(), bufferResult->contents(), sizeof(int) * result.size());
-
-    pAutoreleasePool->release();
+    computeEncoder->release();
+    commandBuffer->release();
+    computePipelineState->release();
+    function->release();
+    library->release();
+    bufferA->release();
+    bufferB->release();
+    bufferResult->release();
+    bufferM->release();
+    bufferN->release();
+    bufferK->release();
+    commandQueue->release();
+    device->release();
+    // pAutoreleasePool->release();
 }
 
 static void list_to_matrix(ErlNifEnv *env, ERL_NIF_TERM list_term, unsigned int rows, unsigned int cols, vector<int> &matrix)

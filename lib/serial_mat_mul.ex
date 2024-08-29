@@ -1,40 +1,32 @@
 defmodule SerialMatMul do
   @moduledoc """
-  Documentation for `SerialMatMul`.
+  Serial matrix multiplication
   """
 
   @doc """
-  Hello world.
-
+  Multiplies two matrices serially
   ## Examples
-
-      iex> SerialMatMul.hello()
-      :world
-
+  iex> SerialMatMul.multiply([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]], [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
+  [[38, 44, 50, 56], [83, 98, 113, 128], [128, 152, 176, 200], [173, 206, 239, 272]]
   """
-  def hello do
-    :world
-  end
 
-  def multiply(matrix1, matrix2) do
-    with cols1 <- length(hd(matrix1)),
-         rows2 <- length(matrix2),
-         true <- cols1 == rows2 do
-      do_multiply(matrix1, transpose(matrix2))
-    else
-      _ -> raise "Cannot multiply these matrices. Incompatible dimensions."
-    end
-  end
+  def multiply(a, b) do
+    rows_a = length(a)
+    cols_b = length(Enum.at(b, 0))
 
-  defp do_multiply(matrix1, matrix2_transposed) do
-    for row <- matrix1 do
-      for col <- matrix2_transposed do
-        Enum.zip_with(row, col, &(&1 * &2)) |> Enum.sum()
+    for row_idx <- 0..(rows_a - 1) do
+      for col_idx <- 0..(cols_b - 1) do
+        row =
+          Enum.at(a, row_idx)
+
+        col =
+          Enum.map(b, fn x -> Enum.at(x, col_idx) end)
+
+        row
+        |> Enum.zip(col)
+        |> Enum.map(fn {x, y} -> x * y end)
+        |> Enum.sum()
       end
     end
-  end
-
-  defp transpose(matrix) do
-    matrix |> List.zip() |> Enum.map(&Tuple.to_list/1)
   end
 end
